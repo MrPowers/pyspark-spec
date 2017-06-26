@@ -1,0 +1,6 @@
+/spark-warehouse
+.DS_Store
+sparktestingbase/
+run-tests
+MANIFEST.in
+setup.py
