@@ -1,3 +1,5 @@
+import unittest
+
 from pyspark.sql import SparkSession
 
 spark = SparkSession.builder \
@@ -6,5 +8,12 @@ spark = SparkSession.builder \
   .config("spark.some.config.option", "some-value") \
   .getOrCreate()
 
-df = spark.range(5)
-df.show()
+class TestDataFrameMethods(unittest.TestCase):
+
+    def test_count(self):
+        df = spark.range(5)
+        self.assertEqual(df.count(), 5)
+
+if __name__ == '__main__':
+    unittest.main()
+
