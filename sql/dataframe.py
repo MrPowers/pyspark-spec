@@ -4,11 +4,19 @@ from pyspark.sql import SparkSession
 
 spark = SparkSession.builder \
   .master("local") \
-  .appName("Word Count") \
-  .config("spark.some.config.option", "some-value") \
+  .appName("pyspark-spec") \
   .getOrCreate()
 
 class TestDataFrameMethods(unittest.TestCase):
+
+    def test_dataframe_equality(self):
+        people1 = [('Alice', 1)]
+        p1 = spark.createDataFrame(people1)
+
+        people2 = [('Alice', 1)]
+        p2 = spark.createDataFrame(people2)
+
+        self.assertEqual(p1.collect(), p2.collect())
 
     def test_count(self):
         df = spark.range(5)
@@ -16,4 +24,5 @@ class TestDataFrameMethods(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
 
