@@ -4,3 +4,4 @@ sparktestingbase/
 run-tests
 MANIFEST.in
 setup.py
+__pycache__

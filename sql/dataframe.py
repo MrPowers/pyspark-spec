@@ -1,11 +1,5 @@
 import unittest
-
-from pyspark.sql import SparkSession
-
-spark = SparkSession.builder \
-  .master("local") \
-  .appName("pyspark-spec") \
-  .getOrCreate()
+from spark import *
 
 class TestDataFrameMethods(unittest.TestCase):
 
