@@ -1,7 +1,13 @@
 import pytest
 from spark import *
 
+from pyspark.sql.functions import col
+
 class TestDataFrame(object):
+
+    def test_columns(self):
+      sourceDF = spark.createDataFrame([("jose", 1), ("li", 2), ("luisa", 3)], ["name", "age"])
+      assert(sourceDF.columns == ["name", "age"])
 
     def test_dataframe_equality(self):
         people1 = [('Alice', 1)]
