@@ -5,3 +5,4 @@ run-tests
 MANIFEST.in
 setup.py
 __pycache__
+.cache/
