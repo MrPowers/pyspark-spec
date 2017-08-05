@@ -14,6 +14,31 @@ class TestDataFrame(object):
         corr = sourceDF.corr("quiz1", "quiz2")
         assert(pytest.approx(0.95, 0.1) == corr)
 
+    def test_join(self):
+        peopleDF = spark.createDataFrame([
+            ("larry", "1"),
+            ("jeff", "2"),
+            ("susy", "3")
+        ], ["person", "id"])
+
+        birthplaceDF = spark.createDataFrame([
+            ("new york", "1"),
+            ("ohio", "2"),
+            ("los angeles", "3")
+        ], ["city", "person_id"])
+
+        actualDF = peopleDF.join(
+            birthplaceDF, peopleDF.id == birthplaceDF.person_id
+        )
+
+        expectedDF = spark.createDataFrame([
+            ("larry", "1", "new york", "1"),
+            ("jeff", "2", "ohio", "2"),
+            ("susy", "3", "los angeles", "3")
+        ], ["person", "id", "city", "person_id"])
+
+        assert(sorted(actualDF.collect()) == sorted(expectedDF.collect()))
+
     def test_dataframe_equality(self):
         people1 = [('Alice', 1)]
         p1 = spark.createDataFrame(people1)
