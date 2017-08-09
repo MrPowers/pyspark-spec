@@ -5,14 +5,83 @@ from pyspark.sql.functions import col
 
 class TestDataFrame(object):
 
+    def test_coalesce(self):
+        pytest.skip("to be added")
+
+    def test_collect(self):
+        pytest.skip("to be added")
+
     def test_columns(self):
-        sourceDF = spark.createDataFrame([("jose", 1), ("li", 2), ("luisa", 3)], ["name", "age"])
+        data = [("jose", 1), ("li", 2), ("luisa", 3)]
+        sourceDF = spark.createDataFrame(data, ["name", "age"])
         assert(sourceDF.columns == ["name", "age"])
 
     def test_corr(self):
-        sourceDF = spark.createDataFrame([(1, 10), (2, 15), (3, 33)], ["quiz1", "quiz2"])
+        data = [(1, 10), (2, 15), (3, 33)]
+        sourceDF = spark.createDataFrame(data, ["quiz1", "quiz2"])
         corr = sourceDF.corr("quiz1", "quiz2")
         assert(pytest.approx(0.95, 0.1) == corr)
+
+    def test_count(self):
+        df = spark.range(5)
+        assert(df.count() == 5)
+
+    def test_cov(self):
+        pytest.skip("to be added")
+
+    def test_cross_join(self):
+        pytest.skip("to be added")
+
+    def test_cross_tab(self):
+        pytest.skip("to be added")
+
+    def test_cube(self):
+        pytest.skip("to be added")
+
+    def test_describe(self):
+        pytest.skip("to be added")
+
+    def test_distinct(self):
+        pytest.skip("to be added")
+
+    def test_drop(self):
+        pytest.skip("to be added")
+
+    def test_drop_duplicates(self):
+        pytest.skip("to be added")
+
+    def test_drop_na(self):
+        pytest.skip("to be added")
+
+    def test_dtypes(self):
+        pytest.skip("to be added")
+
+    def test_explain(self):
+        pytest.skip("to be added")
+
+    def test_fillna(self):
+        pytest.skip("to be added")
+
+    def test_filer(self):
+        pytest.skip("to be added")
+
+    def test_first(self):
+        pytest.skip("to be added")
+
+    def test_foreach(self):
+        pytest.skip("to be added")
+
+    def test_foreachPartition(self):
+        pytest.skip("to be added")
+
+    def test_groupby(self):
+        pytest.skip("to be added")
+
+    def test_head(self):
+        pytest.skip("to be added")
+
+    def test_intersect(self):
+        pytest.skip("to be added")
 
     def test_join(self):
         peopleDF = spark.createDataFrame([
@@ -39,16 +108,10 @@ class TestDataFrame(object):
 
         assert(sorted(actualDF.collect()) == sorted(expectedDF.collect()))
 
-    def test_dataframe_equality(self):
-        people1 = [('Alice', 1)]
-        p1 = spark.createDataFrame(people1)
+    def limit(self):
+        pytest.skip("to be added")
 
-        people2 = [('Alice', 1)]
-        p2 = spark.createDataFrame(people2)
+    def na(self):
+        pytest.skip("to be added")
 
-        assert(p1.collect() == p2.collect())
-
-    def test_count(self):
-        df = spark.range(5)
-        assert(df.count() == 5)
 
