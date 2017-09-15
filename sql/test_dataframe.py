@@ -56,7 +56,15 @@ class TestDataFrame(object):
         pytest.skip("to be added")
 
     def test_drop_duplicates(self):
-        pytest.skip("to be added")
+        source_data = [("jose", 1), ("li", 2), ("jose", 1)]
+        sourceDF = spark.createDataFrame(source_data, ["name", "age"])
+
+        actualDF = sourceDF.drop_duplicates()
+
+        expected_data = [("jose", 1), ("li", 2)]
+        expectedDF = spark.createDataFrame(expected_data, ["name", "age"])
+
+        assert(sorted(expectedDF.collect()) == sorted(actualDF.collect()))
 
     def test_drop_na(self):
         pytest.skip("to be added")
