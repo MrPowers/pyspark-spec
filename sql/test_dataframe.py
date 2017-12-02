@@ -124,10 +124,30 @@ class TestDataFrame(object):
 
         assert(sorted(actualDF.collect()) == sorted(expectedDF.collect()))
 
-    def limit(self):
+    def test_limit(self):
         pytest.skip("to be added")
 
-    def na(self):
+    def test_na(self):
         pytest.skip("to be added")
 
+    def test_select_with_array_argument(self):
+        data = [("jose", 1, "mexico"), ("li", 2, "china"), ("sandy", 3, "usa")]
+        source_df = spark.createDataFrame(data, ["name", "age", "country"])
 
+        actual_df = source_df.select(["age", "name"])
+
+        data = [(1, "jose"), (2, "li"), (3, "sandy")]
+        expected_df = spark.createDataFrame(data, ["age", "name"])
+
+        assert(sorted(actual_df.collect()) == sorted(expected_df.collect()))
+
+    def test_select_with_multiple_string_arguments(self):
+        data = [("jose", 1, "mexico"), ("li", 2, "china"), ("sandy", 3, "usa")]
+        source_df = spark.createDataFrame(data, ["name", "age", "country"])
+
+        actual_df = source_df.select("age", "name")
+
+        data = [(1, "jose"), (2, "li"), (3, "sandy")]
+        expected_df = spark.createDataFrame(data, ["age", "name"])
+
+        assert(sorted(actual_df.collect()) == sorted(expected_df.collect()))
