@@ -1,12 +1,14 @@
 # pyspark-spec
 
-A test suite to document the behavior of the Pyspark engine.
+A test suite to document the behavior of the PySpark engine.
 
-## How to run a test file
+## How to run the tests
 
-* Download Spark
-* Run a test file: `spark_path/bin/spark-submit sql/dataframe.py`
+This project uses Poetry for dependency management.
 
-## How to supress INFO logs
+* Run `poetry install` to install all the project dependencies on a virtual environment
+* Run the tests with `poetry run pytest tests`
+
+## How to suppress INFO logs
 
 Open the `conf/log4j.properties` file and change the logging level to ERROR: `log4j.rootCategory=ERROR, console`.  [Detailed instructions here](https://stackoverflow.com/questions/27781187/how-to-stop-messages-displaying-on-spark-console).

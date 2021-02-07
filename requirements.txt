@@ -1,3 +1,0 @@
-pytest==3.2.0
-pyspark.egg==info
-pyspark==2.2.0
