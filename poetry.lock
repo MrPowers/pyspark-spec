@@ -1,10 +1,18 @@
 [[package]]
+name = "chispa"
+version = "0.8.2"
+description = "Pyspark test helper library"
+category = "dev"
+optional = false
+python-versions = ">2.7"
+
+[[package]]
 name = "colorama"
-version = "0.4.1"
+version = "0.4.4"
 description = "Cross-platform colored terminal text."
 category = "dev"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "py"
@@ -24,11 +32,11 @@ python-versions = "*"
 
 [[package]]
 name = "pyspark"
-version = "3.0.1"
+version = "3.1.1"
 description = "Apache Spark Python API"
 category = "dev"
 optional = false
-python-versions = "*"
+python-versions = ">=3.6"
 
 [package.dependencies]
 py4j = "0.10.9"
@@ -36,7 +44,7 @@ py4j = "0.10.9"
 [package.extras]
 ml = ["numpy (>=1.7)"]
 mllib = ["numpy (>=1.7)"]
-sql = ["pandas (>=0.23.2)", "pyarrow (>=0.15.1)"]
+sql = ["pandas (>=0.23.2)", "pyarrow (>=1.0.0)"]
 
 [[package]]
 name = "pytest"
@@ -63,13 +71,17 @@ pytest = ">=2.6.0"
 
 [metadata]
 lock-version = "1.1"
-python-versions = ">3.4"
-content-hash = "a240f96d7b55028aabbf32e8e55b8c39b0998d42f3f9a40db6894902afa706cf"
+python-versions = ">3.6"
+content-hash = "e567d00d09de6fff351ecee86944585c317b0f41fec4dfe4eb7658dbf79b68fe"
 
 [metadata.files]
+chispa = [
+    {file = "chispa-0.8.2-py2.py3-none-any.whl", hash = "sha256:a39af09632f09eae45a08fec316aee139357160fae979b9df6cce43f4f7a41de"},
+    {file = "chispa-0.8.2.tar.gz", hash = "sha256:f6d3037823ca30f636ad274b26331094f3d08798ea470bc5b5cd1be473972843"},
+]
 colorama = [
-    {file = "colorama-0.4.1-py2.py3-none-any.whl", hash = "sha256:f8ac84de7840f5b9c4e3347b3c1eaa50f7e49c2b07596221daec5edaabbd7c48"},
-    {file = "colorama-0.4.1.tar.gz", hash = "sha256:05eed71e2e327246ad6b38c540c4a3117230b19679b875190486ddd2d721422d"},
+    {file = "colorama-0.4.4-py2.py3-none-any.whl", hash = "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"},
+    {file = "colorama-0.4.4.tar.gz", hash = "sha256:5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b"},
 ]
 py = [
     {file = "py-1.10.0-py2.py3-none-any.whl", hash = "sha256:3b80836aa6d1feeaa108e046da6423ab8f6ceda6468545ae8d02d9d58d18818a"},
@@ -80,7 +92,7 @@ py4j = [
     {file = "py4j-0.10.9.tar.gz", hash = "sha256:36ec57f43ff8ced260a18aa9a4e46c3500a730cac8860e259cbaa546c2b9db2f"},
 ]
 pyspark = [
-    {file = "pyspark-3.0.1.tar.gz", hash = "sha256:38b485d3634a86c9a2923c39c8f08f003fdd0e0a3d7f07114b2fb4392ce60479"},
+    {file = "pyspark-3.1.1.tar.gz", hash = "sha256:104abc146d4ffb72d4c683d25d7af5a6bf955d94590a76f542ee23185670aa7e"},
 ]
 pytest = [
     {file = "pytest-3.2.2-py2.py3-none-any.whl", hash = "sha256:b84f554f8ddc23add65c411bf112b2d88e2489fd45f753b1cae5936358bdf314"},
