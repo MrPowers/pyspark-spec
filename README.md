@@ -2,6 +2,12 @@
 
 A test suite to document the behavior of the PySpark engine.
 
+Project goals:
+
+* provide working code snippets for all PySpark functions
+* make it easy for folks to clone the repo and run PySpark tests locally
+* create a welcoming atmosphere for devs that want to make their first open source pull request
+
 ## How to run the tests
 
 This project uses Poetry for dependency management.
