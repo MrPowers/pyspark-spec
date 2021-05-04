@@ -7,7 +7,6 @@ from chispa.dataframe_comparer import *
 
 
 class TestFunctions(object):
-
     def test_concat(self):
         df = spark.createDataFrame(
             [(["a", "a", "b", "c"], ["c", "d"])], ["arr1", "arr2"]
@@ -17,10 +16,10 @@ class TestFunctions(object):
         #     "arr_concat_distinct", array_distinct(concat(col("arr1"), col("arr2")))
         # ).show()
         expected = spark.createDataFrame(
-            [(["a", "a", "b", "c"], ["c", "d"], ["a", "a", "b", "c", "c", "d"])], ["arr1", "arr2", "arr_concat"]
+            [(["a", "a", "b", "c"], ["c", "d"], ["a", "a", "b", "c", "c", "d"])],
+            ["arr1", "arr2", "arr_concat"],
         )
         assert_df_equality(res, expected)
-
 
     def test_array_except(self):
         df = spark.createDataFrame(
@@ -28,10 +27,10 @@ class TestFunctions(object):
         )
         res = df.withColumn("arr_except", array_except(col("arr1"), col("arr2")))
         expected = spark.createDataFrame(
-            [(["a", "a", "b", "c"], ["c", "d"], ["a", "b"])], ["arr1", "arr2", "arr_except"]
+            [(["a", "a", "b", "c"], ["c", "d"], ["a", "b"])],
+            ["arr1", "arr2", "arr_except"],
         )
         assert_df_equality(res, expected)
-
 
     def test_exists(self):
         df = spark.createDataFrame(
@@ -44,8 +43,6 @@ class TestFunctions(object):
         )
         assert_df_equality(res, expected)
 
-
-
     def test_forall(self):
         df = spark.createDataFrame([([1, 2, 3],), ([2, 6, 12],)], ["some_arr"])
         is_even = lambda e: e % 2 == 0
@@ -55,17 +52,16 @@ class TestFunctions(object):
         )
         assert_df_equality(res, expected)
 
-
     def test_array_intersect(self):
         df = spark.createDataFrame(
             [(["a", "a", "b", "c"], ["c", "d"])], ["arr1", "arr2"]
         )
         res = df.withColumn("arr_intersect", array_intersect(col("arr1"), col("arr2")))
         expected = spark.createDataFrame(
-            [(["a", "a", "b", "c"], ["c", "d"], ["c"])], ["arr1", "arr2", "arr_intersect"]
+            [(["a", "a", "b", "c"], ["c", "d"], ["c"])],
+            ["arr1", "arr2", "arr_intersect"],
         )
         assert_df_equality(res, expected)
-
 
     def test_array_union(self):
         df = spark.createDataFrame(
@@ -73,10 +69,10 @@ class TestFunctions(object):
         )
         res = df.withColumn("arr_union", array_union(col("arr1"), col("arr2")))
         expected = spark.createDataFrame(
-            [(["a", "a", "b", "c"], ["c", "d"], ["a", "b", "c", "d"])], ["arr1", "arr2", "arr_union"]
+            [(["a", "a", "b", "c"], ["c", "d"], ["a", "b", "c", "d"])],
+            ["arr1", "arr2", "arr_union"],
         )
         assert_df_equality(res, expected)
-
 
     def test_year(self):
         sourceDF = spark.createDataFrame(
