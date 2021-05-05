@@ -2,21 +2,21 @@ import pytest
 from spark import *
 
 from chispa.dataframe_comparer import *
-from pyspark.sql.functions import col
+from pyspark.sql.functions import *
 
 
 def describe_columns():
     def it_returns_all_column_names():
         data = [("jose", 1), ("li", 2), ("luisa", 3)]
-        sourceDF = spark.createDataFrame(data, ["name", "age"])
-        assert sourceDF.columns == ["name", "age"]
+        df = spark.createDataFrame(data, ["name", "age"])
+        assert df.columns == ["name", "age"]
 
 
 def describe_corr():
     def it_computes_the_correlation():
         data = [(1, 10), (2, 15), (3, 33)]
-        sourceDF = spark.createDataFrame(data, ["quiz1", "quiz2"])
-        corr = sourceDF.corr("quiz1", "quiz2")
+        df = spark.createDataFrame(data, ["quiz1", "quiz2"])
+        corr = df.corr("quiz1", "quiz2")
         assert pytest.approx(0.95, 0.1) == corr
 
 
@@ -33,7 +33,7 @@ def describe_distinct():
         actualDF = sourceDF.distinct()
         expected_data = [("jose", 1), ("li", 2)]
         expectedDF = spark.createDataFrame(expected_data, ["name", "age"])
-        assert sorted(expectedDF.collect()) == sorted(actualDF.collect())
+        assert_df_equality(actualDF, expectedDF, ignore_row_order=True)
 
 
 def describe_drop_duplicates():
@@ -43,7 +43,41 @@ def describe_drop_duplicates():
         actualDF = sourceDF.drop_duplicates()
         expected_data = [("jose", 1), ("li", 2)]
         expectedDF = spark.createDataFrame(expected_data, ["name", "age"])
-        assert sorted(expectedDF.collect()) == sorted(actualDF.collect())
+        assert_df_equality(actualDF, expectedDF, ignore_row_order=True)
+
+
+def describe_filter():
+    def it_can_filter_on_if_column_contains_value():
+        df = spark.createDataFrame(
+            [(["one", "two", "three"],), (["four", "five"],), (["one", "nine"],)], ["some_arr"]
+        )
+        res = df.filter(array_contains(col("some_arr"), "one"))
+        expected = spark.createDataFrame(
+            [(["one", "two", "three"],), (["one", "nine"],)], ["some_arr"]
+        )
+        assert_df_equality(res, expected)
+
+    def it_can_filter_on_if_one_element_meets_condition():
+        df = spark.createDataFrame(
+            [(["apple", "pear"],), (["plan", "pipe"],), (["cat", "ant"],)], ["some_words"]
+        )
+        starts_with_a = lambda s: s.startswith("a")
+        res = df.filter(exists(col("some_words"), starts_with_a))
+        expected = spark.createDataFrame(
+            [(["apple", "pear"],), (["cat", "ant"],)], ["some_words"]
+        )
+        assert_df_equality(res, expected)
+
+    def it_can_filter_rows_that_contain_odd_numbers():
+        df = spark.createDataFrame(
+            [([1, 2, 3, 5, 7],), ([2, 4, 9],), ([2, 4, 6],)], ["some_ints"]
+        )
+        is_even = lambda x: x % 2 == 0
+        res = df.filter(forall(col("some_ints"), is_even))
+        expected = spark.createDataFrame(
+            [([2, 4, 6],)], ["some_ints"]
+        )
+        assert_df_equality(res, expected)
 
 
 def describe_join():

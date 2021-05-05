@@ -6,8 +6,8 @@ from pyspark.sql.functions import *
 from chispa.dataframe_comparer import *
 
 
-class TestFunctions(object):
-    def test_concat(self):
+def describe_concat():
+    def it_can_combine_arrays():
         df = spark.createDataFrame(
             [(["a", "a", "b", "c"], ["c", "d"])], ["arr1", "arr2"]
         )
@@ -21,7 +21,9 @@ class TestFunctions(object):
         )
         assert_df_equality(res, expected)
 
-    def test_array_except(self):
+
+def describe_except():
+    def it_except_combines_arrays():
         df = spark.createDataFrame(
             [(["a", "a", "b", "c"], ["c", "d"])], ["arr1", "arr2"]
         )
@@ -32,7 +34,9 @@ class TestFunctions(object):
         )
         assert_df_equality(res, expected)
 
-    def test_exists(self):
+
+def describe_exists():
+    def it_works_like_any():
         df = spark.createDataFrame(
             [(["a", "b", "c"],), (["x", "y", "z"],)], ["some_arr"]
         )
@@ -43,7 +47,24 @@ class TestFunctions(object):
         )
         assert_df_equality(res, expected)
 
-    def test_forall(self):
+
+def describe_filter():
+    def it_can_remove_odds_from_array():
+        df = spark.createDataFrame(
+            [([1, 2, 3, 5, 7],), ([2, 4, 9],)], ["some_arr"]
+        )
+        df.show()
+        is_even = lambda x: x % 2 == 0
+        res = df.withColumn("arr_evens", filter(col("some_arr"), is_even))
+        res.show()
+        # expected = spark.createDataFrame(
+        #     [(["a", "b", "c"], True), (["x", "y", "z"], False)], ["some_arr", "has_b"]
+        # )
+        # assert_df_equality(res, expected)
+
+
+def describe_forall():
+    def it_works_like_all():
         df = spark.createDataFrame([([1, 2, 3],), ([2, 6, 12],)], ["some_arr"])
         is_even = lambda e: e % 2 == 0
         res = df.withColumn("all_even", forall(col("some_arr"), is_even))
@@ -52,7 +73,9 @@ class TestFunctions(object):
         )
         assert_df_equality(res, expected)
 
-    def test_array_intersect(self):
+
+def describe_intersect():
+    def it_intersect_combines_arrays():
         df = spark.createDataFrame(
             [(["a", "a", "b", "c"], ["c", "d"])], ["arr1", "arr2"]
         )
@@ -63,7 +86,9 @@ class TestFunctions(object):
         )
         assert_df_equality(res, expected)
 
-    def test_array_union(self):
+
+def describe_union():
+    def it_union_combines_arrays():
         df = spark.createDataFrame(
             [(["a", "a", "b", "c"], ["c", "d"])], ["arr1", "arr2"]
         )
@@ -74,7 +99,9 @@ class TestFunctions(object):
         )
         assert_df_equality(res, expected)
 
-    def test_year(self):
+
+def describe_year():
+    def it_extracts_year_from_date():
         sourceDF = spark.createDataFrame(
             [("jose", datetime.date(2017, 1, 1)), ("li", datetime.date(2015, 7, 6))],
             ["name", "birthdate"],
